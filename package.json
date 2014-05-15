@@ -24,6 +24,10 @@
   },
   "homepage": "https://github.com/lemonde/bookshelf-sync",
   "devDependencies": {
+    "chai": "^1.9.1",
     "mocha": "^1.18.2"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1"
   }
 }
