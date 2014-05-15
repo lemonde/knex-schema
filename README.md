@@ -29,9 +29,49 @@ var articles = {
   }
 };
 manager.sync([articles]); // Create / Update tables articles.
-manager.populate([articles]); // Populate table with
+manager.populate([articles]); // Populate table articles.
 manager.reset([articles]); // Remove all data from articles.
 manager.drop([articles]); // Drop table articles.
+```
+
+### bookshelfSync(database)
+
+Create a new manager.
+
+```js
+var manager = require('bookshelf-sync')(database);
+```
+
+### manager.sync(schemas)
+
+Create and update tables specified in schemas.
+
+```js
+manager.sync([articles]);
+```
+
+### manager.populate(schemas)
+
+Populate tables specified in schemas.
+
+```js
+manager.populate([articles]);
+```
+
+### manager.reset(schemas)
+
+Remove all rows in tables specified in schemas.
+
+```js
+manager.reset([articles]);
+```
+
+### manager.drop(schemas)
+
+Drop tables specified in schemas.
+
+```js
+manager.drop([articles]);
 ```
 
 ## License
