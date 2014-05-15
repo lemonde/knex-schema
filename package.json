@@ -1,0 +1,26 @@
+{
+  "name": "bookshelf-sync",
+  "version": "0.0.0",
+  "description": "Bookshelf sync utility.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lemonde/bookshelf-sync.git"
+  },
+  "keywords": [
+    "bookshelf",
+    "sync"
+  ],
+  "author": "Greg Bergé <berge.greg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lemonde/bookshelf-sync/issues"
+  },
+  "homepage": "https://github.com/lemonde/bookshelf-sync"
+}
