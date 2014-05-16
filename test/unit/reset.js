@@ -4,11 +4,16 @@ var sinon = require('sinon');
 var Promise = require('bluebird');
 var Manager = require('../../lib/manager');
 
-describe('Populate', function () {
-  var db, manager, schemas;
+describe('Reset', function () {
+  var db, manager, schemas, del;
 
   beforeEach(function () {
-    db = { bookshelf: { knex: { schema: {} } } };
+    del = sinon.stub().returns(Promise.resolve());
+    db = { bookshelf: {} };
+    db.bookshelf.knex = function () {
+      return { del: del };
+    };
+    db.bookshelf.knex.schema = {};
   });
 
   describe('given empty arguments', function () {
@@ -18,7 +23,7 @@ describe('Populate', function () {
     });
 
     it('should do nothing', function (done) {
-      manager.populate()
+      manager.reset()
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.not.have.been.called;
         done();
@@ -35,7 +40,7 @@ describe('Populate', function () {
     });
 
     it('should do nothing', function (done) {
-      manager.populate(schemas)
+      manager.reset(schemas)
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.not.have.been.called;
         done();
@@ -50,20 +55,19 @@ describe('Populate', function () {
         return Promise.resolve(false);
       });
       schemas = [
-        { tableName: 'a', populate: sinon.spy() },
-        { tableName: 'b', populate: sinon.spy() }
+        { tableName: 'a' },
+        { tableName: 'b' }
       ];
       manager = new Manager(db);
     });
 
     it('should do nothing', function (done) {
-      manager.populate(schemas)
+      manager.reset(schemas)
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledTwice;
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('a');
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('b');
-        expect(schemas[0].populate).to.not.have.been.called;
-        expect(schemas[1].populate).to.not.have.been.called;
+        expect(del).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -76,20 +80,19 @@ describe('Populate', function () {
         return Promise.resolve(true);
       });
       schemas = [
-        { tableName: 'a', populate: sinon.stub().returns(Promise.resolve()) },
-        { tableName: 'b', populate: sinon.stub().returns(Promise.resolve()) }
+        { tableName: 'a' },
+        { tableName: 'b' }
       ];
       manager = new Manager(db);
     });
 
-    it('should populate tables', function (done) {
-      manager.populate(schemas)
+    it('should delete data', function (done) {
+      manager.reset(schemas)
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledTwice;
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('a');
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('b');
-        expect(schemas[0].populate).to.have.been.calledOnce;
-        expect(schemas[1].populate).to.have.been.calledOnce;
+        expect(del).to.have.been.calledTwice;
         done();
       })
       .catch(done);

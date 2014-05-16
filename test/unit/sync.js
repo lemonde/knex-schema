@@ -95,7 +95,7 @@ describe('Sync', function () {
       manager = new Manager(db);
     });
 
-    it('should do nothing', function (done) {
+    it('should create tables', function (done) {
       manager.sync(schemas)
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledTwice;
