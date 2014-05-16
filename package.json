@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha -r test/bootstrap.js test/unit"
+    "test": "mocha -r test/bootstrap.js test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,12 @@
   },
   "homepage": "https://github.com/lemonde/bookshelf-sync",
   "devDependencies": {
+    "bookshelf": "^0.6.10",
     "chai": "^1.9.1",
     "mocha": "^1.18.2",
     "sinon": "^1.9.1",
-    "sinon-chai": "^2.5.0"
+    "sinon-chai": "^2.5.0",
+    "sqlite3": "^2.2.3"
   },
   "dependencies": {
     "bluebird": "^1.2.4",
