@@ -1,9 +1,8 @@
 'use strict';
 
-var expect = require('chai').expect;
-var Resolver = require('../lib/resolver');
+var Resolver = require('../../lib/resolver');
 
-describe('resolver', function () {
+describe('Resolver', function () {
   var resolver, schemas;
 
   describe('given empty arguments', function () {
