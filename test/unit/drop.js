@@ -8,19 +8,19 @@ describe('Drop', function () {
   var db, manager, schemas;
 
   beforeEach(function () {
-    db = { bookshelf: { knex: { schema: {} } } };
+    db = { knex: { schema: {} } };
   });
 
   describe('given empty arguments', function () {
     beforeEach(function () {
-      db.bookshelf.knex.schema.hasTable = sinon.spy();
+      db.knex.schema.hasTable = sinon.spy();
       manager = new Manager(db);
     });
 
     it('should do nothing', function (done) {
       manager.drop()
       .then(function () {
-        expect(db.bookshelf.knex.schema.hasTable).to.not.have.been.called;
+        expect(db.knex.schema.hasTable).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -29,7 +29,7 @@ describe('Drop', function () {
 
   describe('given no schemas', function () {
     beforeEach(function () {
-      db.bookshelf.knex.schema.hasTable = sinon.spy();
+      db.knex.schema.hasTable = sinon.spy();
       manager = new Manager(db);
       schemas = [];
     });
@@ -37,7 +37,7 @@ describe('Drop', function () {
     it('should do nothing', function (done) {
       manager.drop(schemas)
       .then(function () {
-        expect(db.bookshelf.knex.schema.hasTable).to.not.have.been.called;
+        expect(db.knex.schema.hasTable).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -46,7 +46,7 @@ describe('Drop', function () {
 
   describe('given schemas', function () {
     beforeEach(function () {
-      db.bookshelf.knex.schema.dropTableIfExists = sinon.stub().returns(Promise.resolve());
+      db.knex.schema.dropTableIfExists = sinon.stub().returns(Promise.resolve());
       schemas = [
         { tableName: 'a' },
         { tableName: 'b' }
@@ -57,9 +57,9 @@ describe('Drop', function () {
     it('should try to drop table', function (done) {
       manager.drop(schemas)
       .then(function () {
-        expect(db.bookshelf.knex.schema.dropTableIfExists).to.have.been.calledTwice;
-        expect(db.bookshelf.knex.schema.dropTableIfExists).to.have.been.calledWith('a');
-        expect(db.bookshelf.knex.schema.dropTableIfExists).to.have.been.calledWith('b');
+        expect(db.knex.schema.dropTableIfExists).to.have.been.calledTwice;
+        expect(db.knex.schema.dropTableIfExists).to.have.been.calledWith('a');
+        expect(db.knex.schema.dropTableIfExists).to.have.been.calledWith('b');
         done();
       })
       .catch(done);
