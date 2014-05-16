@@ -1,6 +1,6 @@
 {
   "name": "bookshelf-sync",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Bookshelf sync utility.",
   "main": "lib/manager.js",
   "directories": {
