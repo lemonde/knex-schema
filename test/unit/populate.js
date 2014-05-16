@@ -4,7 +4,7 @@ var sinon = require('sinon');
 var Promise = require('bluebird');
 var Manager = require('../../lib/manager');
 
-describe('Sync', function () {
+describe('Populate', function () {
   var db, manager, schemas;
 
   beforeEach(function () {
@@ -18,7 +18,7 @@ describe('Sync', function () {
     });
 
     it('should do nothing', function (done) {
-      manager.sync()
+      manager.populate()
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.not.have.been.called;
         done();
@@ -35,9 +35,35 @@ describe('Sync', function () {
     });
 
     it('should do nothing', function (done) {
-      manager.sync(schemas)
+      manager.populate(schemas)
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.not.have.been.called;
+        done();
+      })
+      .catch(done);
+    });
+  });
+
+  describe('given missing schemas', function () {
+    beforeEach(function () {
+      db.bookshelf.knex.schema.hasTable = sinon.spy(function () {
+        return Promise.resolve(false);
+      });
+      schemas = [
+        { tableName: 'a', populate: sinon.spy() },
+        { tableName: 'b', populate: sinon.spy() }
+      ];
+      manager = new Manager(db);
+    });
+
+    it('should do nothing', function (done) {
+      manager.populate(schemas)
+      .then(function () {
+        expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledTwice;
+        expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('a');
+        expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('b');
+        expect(schemas[0].populate).to.not.have.been.called;
+        expect(schemas[1].populate).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -49,70 +75,21 @@ describe('Sync', function () {
       db.bookshelf.knex.schema.hasTable = sinon.spy(function () {
         return Promise.resolve(true);
       });
-      db.bookshelf.knex.schema.createTable = sinon.spy(function () {
-        return Promise.resolve();
-      });
       schemas = [
-        { tableName: 'a', build: sinon.spy() },
-        { tableName: 'b', build: sinon.spy() }
+        { tableName: 'a', populate: sinon.stub().returns(Promise.resolve()) },
+        { tableName: 'b', populate: sinon.stub().returns(Promise.resolve()) }
       ];
       manager = new Manager(db);
     });
 
     it('should do nothing', function (done) {
-      manager.sync(schemas)
+      manager.populate(schemas)
       .then(function () {
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledTwice;
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('a');
         expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('b');
-        expect(db.bookshelf.knex.schema.createTable).to.not.have.been.called;
-        done();
-      })
-      .catch(done);
-    });
-  });
-
-  describe('given non existing schemas', function () {
-    var table;
-
-    beforeEach(function () {
-      table = {
-        engine: sinon.spy(),
-        timestamps: sinon.spy(),
-        charset: sinon.spy()
-      };
-
-      db.bookshelf.knex.schema.hasTable = sinon.spy(function () {
-        return Promise.resolve(false);
-      });
-      db.bookshelf.knex.schema.createTable = sinon.spy(function (tableName, tableFactory) {
-        return Promise.resolve(tableFactory(table));
-      });
-      schemas = [
-        { tableName: 'a', build: sinon.spy() },
-        { tableName: 'b', build: sinon.spy() }
-      ];
-      manager = new Manager(db);
-    });
-
-    it('should do nothing', function (done) {
-      manager.sync(schemas)
-      .then(function () {
-        expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledTwice;
-        expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('a');
-        expect(db.bookshelf.knex.schema.hasTable).to.have.been.calledWith('b');
-        expect(db.bookshelf.knex.schema.createTable).to.have.been.calledTwice;
-        expect(db.bookshelf.knex.schema.createTable).to.have.been.calledWith('a');
-        expect(db.bookshelf.knex.schema.createTable).to.have.been.calledWith('b');
-        expect(table.engine).to.have.been.calledTwice;
-        expect(table.engine).to.have.been.calledWith('InnoDB');
-        expect(table.timestamps).to.have.been.calledTwice;
-        expect(table.charset).to.have.been.calledTwice;
-        expect(table.charset).to.have.been.calledWith('utf8');
-        expect(schemas[0].build).to.have.been.calledOnce;
-        expect(schemas[0].build).to.have.been.calledWith(table);
-        expect(schemas[1].build).to.have.been.calledOnce;
-        expect(schemas[1].build).to.have.been.calledWith(table);
+        expect(schemas[0].populate).to.have.been.calledOnce;
+        expect(schemas[1].populate).to.have.been.calledOnce;
         done();
       })
       .catch(done);
