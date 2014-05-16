@@ -2,12 +2,12 @@
   "name": "bookshelf-sync",
   "version": "0.0.0",
   "description": "Bookshelf sync utility.",
-  "main": "index.js",
+  "main": "lib/manager.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -r test/bootstrap.js test/unit"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,13 @@
   },
   "homepage": "https://github.com/lemonde/bookshelf-sync",
   "devDependencies": {
-    "mocha": "^1.18.2"
+    "chai": "^1.9.1",
+    "mocha": "^1.18.2",
+    "sinon": "^1.9.1",
+    "sinon-chai": "^2.5.0"
+  },
+  "dependencies": {
+    "bluebird": "^1.2.4",
+    "lodash": "^2.4.1"
   }
 }
