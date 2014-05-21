@@ -1,31 +1,31 @@
 {
-  "name": "bookshelf-sync",
+  "name": "knex-schema",
   "version": "1.0.0",
-  "description": "Bookshelf sync utility.",
+  "description": "Knex schema utility.",
   "main": "lib/manager.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha -r test/bootstrap.js test/**/*.js"
+    "test": "mocha -r test/bootstrap.js \"test/**/*.js\""
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lemonde/bookshelf-sync.git"
+    "url": "git://github.com/lemonde/knex-schema.git"
   },
   "keywords": [
-    "bookshelf",
-    "sync"
+    "knex",
+    "schema"
   ],
-  "author": "Greg Bergé <berge.greg@gmail.com>",
+  "author": "Stefen Alper <alper@lemonde.fr>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lemonde/bookshelf-sync/issues"
+    "url": "https://github.com/lemonde/knex-schema/issues"
   },
-  "homepage": "https://github.com/lemonde/bookshelf-sync",
+  "homepage": "https://github.com/lemonde/knex-schema",
   "devDependencies": {
-    "bookshelf": "^0.6.10",
     "chai": "^1.9.1",
+    "knex": "^0.5.14",
     "mocha": "^1.18.2",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",

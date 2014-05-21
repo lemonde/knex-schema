@@ -2,13 +2,13 @@
 
 var schemas = require('../fixtures/schemas');
 var Manager = require('../../');
-var Bookshelf = require('bookshelf');
+var knex = require('knex');
 
 describe('Manager', function () {
   var manager;
 
   before(function () {
-    manager = new Manager(Bookshelf.initialize({
+    manager = new Manager(knex.initialize({
       client: 'sqlite',
       connection: {
         filename: ':memory:'
@@ -17,17 +17,17 @@ describe('Manager', function () {
   });
 
   after(function () {
-    manager.db.knex.client.pool.destroy();
+    manager.knex.client.pool.destroy();
   });
 
   it('should sync schemas', function (done) {
     manager.sync(schemas)
     .then(function () {
-      return manager.db.knex.schema.hasTable('first');
+      return manager.knex.schema.hasTable('first');
     })
     .then(function (exists) {
       expect(exists).to.be.true;
-      return manager.db.knex.schema.hasTable('second');
+      return manager.knex.schema.hasTable('second');
     })
     .then(function (exists) {
       expect(exists).to.be.true;
@@ -39,14 +39,14 @@ describe('Manager', function () {
   it('should populate schemas', function (done) {
     manager.populate(schemas)
     .then(function () {
-      return manager.db.knex('first').select();
+      return manager.knex('first').select();
     })
     .then(function (rows) {
       expect(rows).to.eql([
         { id: 1, content: 'first-foo', created_at: null, updated_at: null },
         { id: 2, content: 'first-bar', created_at: null, updated_at: null },
       ]);
-      return manager.db.knex('second').select();
+      return manager.knex('second').select();
     })
     .then(function (rows) {
       expect(rows).to.eql([
@@ -61,11 +61,11 @@ describe('Manager', function () {
   it('should reset schemas', function (done) {
     manager.reset(schemas)
     .then(function () {
-      return manager.db.knex('first').select();
+      return manager.knex('first').select();
     })
     .then(function (rows) {
       expect(rows).to.eql([]);
-      return manager.db.knex('second').select();
+      return manager.knex('second').select();
     })
     .then(function (rows) {
       expect(rows).to.eql([]);
@@ -77,11 +77,11 @@ describe('Manager', function () {
   it('should drop schemas', function (done) {
     manager.drop(schemas)
     .then(function () {
-      return manager.db.knex.schema.hasTable('first');
+      return manager.knex.schema.hasTable('first');
     })
     .then(function (exists) {
       expect(exists).to.be.false;
-      return manager.db.knex.schema.hasTable('second');
+      return manager.knex.schema.hasTable('second');
     })
     .then(function (exists) {
       expect(exists).to.be.false;

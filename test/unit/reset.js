@@ -5,27 +5,26 @@ var Promise = require('bluebird');
 var Manager = require('../../lib/manager');
 
 describe('Reset', function () {
-  var db, manager, schemas, del;
+  var knex, manager, schemas, del;
 
   beforeEach(function () {
     del = sinon.stub().returns(Promise.resolve());
-    db = { };
-    db.knex = function () {
+    knex = function () {
       return { del: del };
     };
-    db.knex.schema = {};
+    knex.schema = {};
   });
 
   describe('given empty arguments', function () {
     beforeEach(function () {
-      db.knex.schema.hasTable = sinon.spy();
-      manager = new Manager(db);
+      knex.schema.hasTable = sinon.spy();
+      manager = new Manager(knex);
     });
 
     it('should do nothing', function (done) {
       manager.reset()
       .then(function () {
-        expect(db.knex.schema.hasTable).to.not.have.been.called;
+        expect(knex.schema.hasTable).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -34,15 +33,15 @@ describe('Reset', function () {
 
   describe('given no schemas', function () {
     beforeEach(function () {
-      db.knex.schema.hasTable = sinon.spy();
-      manager = new Manager(db);
+      knex.schema.hasTable = sinon.spy();
+      manager = new Manager(knex);
       schemas = [];
     });
 
     it('should do nothing', function (done) {
       manager.reset(schemas)
       .then(function () {
-        expect(db.knex.schema.hasTable).to.not.have.been.called;
+        expect(knex.schema.hasTable).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -51,22 +50,22 @@ describe('Reset', function () {
 
   describe('given missing schemas', function () {
     beforeEach(function () {
-      db.knex.schema.hasTable = sinon.spy(function () {
+      knex.schema.hasTable = sinon.spy(function () {
         return Promise.resolve(false);
       });
       schemas = [
         { tableName: 'a' },
         { tableName: 'b' }
       ];
-      manager = new Manager(db);
+      manager = new Manager(knex);
     });
 
     it('should do nothing', function (done) {
       manager.reset(schemas)
       .then(function () {
-        expect(db.knex.schema.hasTable).to.have.been.calledTwice;
-        expect(db.knex.schema.hasTable).to.have.been.calledWith('a');
-        expect(db.knex.schema.hasTable).to.have.been.calledWith('b');
+        expect(knex.schema.hasTable).to.have.been.calledTwice;
+        expect(knex.schema.hasTable).to.have.been.calledWith('a');
+        expect(knex.schema.hasTable).to.have.been.calledWith('b');
         expect(del).to.not.have.been.called;
         done();
       })
@@ -76,22 +75,22 @@ describe('Reset', function () {
 
   describe('given existing schemas', function () {
     beforeEach(function () {
-      db.knex.schema.hasTable = sinon.spy(function () {
+      knex.schema.hasTable = sinon.spy(function () {
         return Promise.resolve(true);
       });
       schemas = [
         { tableName: 'a' },
         { tableName: 'b' }
       ];
-      manager = new Manager(db);
+      manager = new Manager(knex);
     });
 
     it('should delete data', function (done) {
       manager.reset(schemas)
       .then(function () {
-        expect(db.knex.schema.hasTable).to.have.been.calledTwice;
-        expect(db.knex.schema.hasTable).to.have.been.calledWith('a');
-        expect(db.knex.schema.hasTable).to.have.been.calledWith('b');
+        expect(knex.schema.hasTable).to.have.been.calledTwice;
+        expect(knex.schema.hasTable).to.have.been.calledWith('a');
+        expect(knex.schema.hasTable).to.have.been.calledWith('b');
         expect(del).to.have.been.calledTwice;
         done();
       })
