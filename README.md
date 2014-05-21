@@ -1,21 +1,21 @@
-# bookshelf-sync
-[![Build Status](https://travis-ci.org/lemonde/bookshelf-sync.svg?branch=master)](https://travis-ci.org/lemonde/bookshelf-sync)
-[![Dependency Status](https://david-dm.org/lemonde/bookshelf-sync.svg?theme=shields.io)](https://david-dm.org/lemonde/bookshelf-sync)
-[![devDependency Status](https://david-dm.org/lemonde/bookshelf-sync/dev-status.svg?theme=shields.io)](https://david-dm.org/lemonde/bookshelf-sync#info=devDependencies)
+# knex-schema
+[![Build Status](https://travis-ci.org/lemonde/knex-schema.svg?branch=master)](https://travis-ci.org/lemonde/knex-schema)
+[![Dependency Status](https://david-dm.org/lemonde/knex-schema.svg?theme=shields.io)](https://david-dm.org/lemonde/knex-schema)
+[![devDependency Status](https://david-dm.org/lemonde/knex-schema/dev-status.svg?theme=shields.io)](https://david-dm.org/lemonde/knex-schema#info=devDependencies)
 
-Bookshelf sync utility.
+Knex sync utility.
 
 ## Install
 
 ```
-npm install bookshelf-sync
+npm install knex-schema
 ```
 
 ## Usage
 
 ```js
-var database = require('bookshelf').initialize({ client: 'pg' });
-var manager = require('bookshelf-sync')(database);
+var database = require('knex').initialize({ client: 'pg' });
+var manager = require('knex-schema')(database);
 var articles = {
   tableName: 'articles',
   build: function (table) {
@@ -34,12 +34,12 @@ manager.reset([articles]); // Remove all data from articles.
 manager.drop([articles]); // Drop table articles.
 ```
 
-### bookshelfSync(database)
+### knexSchema(database)
 
 Create a new manager.
 
 ```js
-var manager = require('bookshelf-sync')(database);
+var manager = require('knex-schema')(database);
 ```
 
 ### manager.sync(schemas)

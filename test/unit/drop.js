@@ -5,22 +5,22 @@ var Promise = require('bluebird');
 var Manager = require('../../lib/manager');
 
 describe('Drop', function () {
-  var db, manager, schemas;
+  var knex, manager, schemas;
 
   beforeEach(function () {
-    db = { knex: { schema: {} } };
+    knex = { schema: {} };
   });
 
   describe('given empty arguments', function () {
     beforeEach(function () {
-      db.knex.schema.hasTable = sinon.spy();
-      manager = new Manager(db);
+      knex.schema.hasTable = sinon.spy();
+      manager = new Manager(knex);
     });
 
     it('should do nothing', function (done) {
       manager.drop()
       .then(function () {
-        expect(db.knex.schema.hasTable).to.not.have.been.called;
+        expect(knex.schema.hasTable).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -29,15 +29,15 @@ describe('Drop', function () {
 
   describe('given no schemas', function () {
     beforeEach(function () {
-      db.knex.schema.hasTable = sinon.spy();
-      manager = new Manager(db);
+      knex.schema.hasTable = sinon.spy();
+      manager = new Manager(knex);
       schemas = [];
     });
 
     it('should do nothing', function (done) {
       manager.drop(schemas)
       .then(function () {
-        expect(db.knex.schema.hasTable).to.not.have.been.called;
+        expect(knex.schema.hasTable).to.not.have.been.called;
         done();
       })
       .catch(done);
@@ -46,20 +46,20 @@ describe('Drop', function () {
 
   describe('given schemas', function () {
     beforeEach(function () {
-      db.knex.schema.dropTableIfExists = sinon.stub().returns(Promise.resolve());
+      knex.schema.dropTableIfExists = sinon.stub().returns(Promise.resolve());
       schemas = [
         { tableName: 'a' },
         { tableName: 'b' }
       ];
-      manager = new Manager(db);
+      manager = new Manager(knex);
     });
 
     it('should try to drop table', function (done) {
       manager.drop(schemas)
       .then(function () {
-        expect(db.knex.schema.dropTableIfExists).to.have.been.calledTwice;
-        expect(db.knex.schema.dropTableIfExists).to.have.been.calledWith('a');
-        expect(db.knex.schema.dropTableIfExists).to.have.been.calledWith('b');
+        expect(knex.schema.dropTableIfExists).to.have.been.calledTwice;
+        expect(knex.schema.dropTableIfExists).to.have.been.calledWith('a');
+        expect(knex.schema.dropTableIfExists).to.have.been.calledWith('b');
         done();
       })
       .catch(done);
