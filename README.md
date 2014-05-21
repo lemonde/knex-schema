@@ -15,7 +15,8 @@ npm install knex-schema
 
 ```js
 var database = require('knex').initialize({ client: 'pg' });
-var manager = require('knex-schema')(database);
+var Manager = require('knex-schema');
+var manager = new Manager(database);
 var articles = {
   tableName: 'articles',
   build: function (table) {
