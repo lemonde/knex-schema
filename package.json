@@ -17,7 +17,7 @@
     "knex",
     "schema"
   ],
-  "author": "Stefen Alper <alper@lemonde.fr>",
+  "author": "salper <alper@lemonde.fr>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/lemonde/knex-schema/issues"
