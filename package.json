@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "NODE_ENV=test mocha -r test/bootstrap.js --recursive",
-    "coverage": "NODE_ENV=test mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
+    "coverage": "NODE_ENV=test mocha --require blanket --reporter mocha-lcov-reporter --recursive | coveralls"
   },
   "repository": {
     "type": "git",
