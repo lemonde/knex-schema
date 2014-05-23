@@ -1,7 +1,13 @@
 # knex-schema
-[![Build Status](https://travis-ci.org/lemonde/knex-schema.svg?branch=master)](https://travis-ci.org/lemonde/knex-schema)
-[![Dependency Status](https://david-dm.org/lemonde/knex-schema.svg?theme=shields.io)](https://david-dm.org/lemonde/knex-schema)
-[![devDependency Status](https://david-dm.org/lemonde/knex-schema/dev-status.svg?theme=shields.io)](https://david-dm.org/lemonde/knex-schema#info=devDependencies)
+[![Build Status][status]](https://travis-ci.org/lemonde/knex-schema)
+[![Dependency Status][deps]](https://david-dm.org/lemonde/knex-schema)
+[![devDependency Status][devdeps]](https://david-dm.org/lemonde/knex-schema#info=devDependencies)
+[![Coverage Status][coverage]](https://coveralls.io/r/lemonde/knex-schema)
+
+[status]: https://travis-ci.org/lemonde/knex-schema.svg?branch=master
+[deps]: https://david-dm.org/lemonde/knex-schema.svg?theme=shields.io
+[devdeps]: https://david-dm.org/lemonde/knex-schema/dev-status.svg?theme=shields.io
+[coverage]: https://img.shields.io/coveralls/lemonde/knex-schema.svg
 
 Knex sync utility.
 

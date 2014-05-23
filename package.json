@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha -r test/bootstrap.js \"test/**/*.js\""
+    "test": "NODE_ENV=test mocha -r test/bootstrap.js --recursive",
+    "coverage": "NODE_ENV=test mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
   },
   "repository": {
     "type": "git",
@@ -24,9 +25,12 @@
   },
   "homepage": "https://github.com/lemonde/knex-schema",
   "devDependencies": {
+    "blanket": "^1.1.6",
     "chai": "^1.9.1",
+    "coveralls": "^2.10.0",
     "knex": "^0.5.14",
     "mocha": "^1.18.2",
+    "mocha-lcov-reporter": "0.0.1",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",
     "sqlite3": "^2.2.3"
@@ -34,5 +38,10 @@
   "dependencies": {
     "bluebird": "^1.2.4",
     "lodash": "^2.4.1"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "lib"
+    }
   }
 }
