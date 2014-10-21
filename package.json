@@ -28,12 +28,12 @@
     "blanket": "^1.1.6",
     "chai": "^1.9.1",
     "coveralls": "^2.10.0",
-    "knex": "^0.5.14",
+    "knex": "^0.7.3",
     "mocha": "^1.18.2",
     "mocha-lcov-reporter": "0.0.1",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",
-    "sqlite3": "^2.2.3"
+    "sqlite3": "^3.0.2"
   },
   "dependencies": {
     "bluebird": "^1.2.4",
