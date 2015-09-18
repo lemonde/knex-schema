@@ -1,6 +1,6 @@
 {
   "name": "knex-schema",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Knex schema utility.",
   "main": "lib/manager.js",
   "directories": {
@@ -36,8 +36,8 @@
     "sqlite3": "^3.0.2"
   },
   "dependencies": {
-    "bluebird": "^1.2.4",
-    "lodash": "^2.4.1"
+    "bluebird": "^2.10.0",
+    "lodash": "^3.10.1"
   },
   "config": {
     "blanket": {
