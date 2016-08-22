@@ -104,11 +104,7 @@ describe('Sync', function () {
         expect(knex.schema.createTable).to.have.been.calledTwice;
         expect(knex.schema.createTable).to.have.been.calledWith('a');
         expect(knex.schema.createTable).to.have.been.calledWith('b');
-        expect(table.engine).to.have.been.calledTwice;
-        expect(table.engine).to.have.been.calledWith('InnoDB');
         expect(table.timestamps).to.have.been.calledTwice;
-        expect(table.charset).to.have.been.calledTwice;
-        expect(table.charset).to.have.been.calledWith('utf8');
         expect(schemas[0].build).to.have.been.calledOnce;
         expect(schemas[0].build).to.have.been.calledWith(table);
         expect(schemas[1].build).to.have.been.calledOnce;
