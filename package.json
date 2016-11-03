@@ -28,7 +28,7 @@
     "blanket": "^1.1.6",
     "chai": "^1.10.0",
     "coveralls": "^2.10.0",
-    "knex": "^0.7.6",
+    "knex": "^0.12.6",
     "mocha": "^1.21.5",
     "mocha-lcov-reporter": "0.0.2",
     "sinon": "^1.9.1",
