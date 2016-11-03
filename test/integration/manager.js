@@ -8,7 +8,7 @@ describe('Manager', function () {
   var manager;
 
   before(function () {
-    manager = new Manager(knex.initialize({
+    manager = new Manager(knex({
       client: 'sqlite',
       connection: {
         filename: ':memory:'
