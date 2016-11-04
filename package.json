@@ -1,6 +1,6 @@
 {
   "name": "knex-schema",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "description": "Knex schema utility.",
   "main": "lib/manager.js",
   "directories": {
